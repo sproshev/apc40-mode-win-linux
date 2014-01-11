@@ -4,12 +4,15 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.VBoxBuilder;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -27,6 +30,16 @@ public class Main extends Application {
     @Override
     public void start(Stage stage)
             throws Exception {
+        try {
+            String osName = System.getProperty("os.name");
+            if (!osName.startsWith("Windows") && !osName.startsWith("Linux") && !osName.startsWith("LINUX")) {
+                showMessage(osName + " is not supported");
+                return;
+            }
+        } catch (SecurityException e) {
+            showMessage("Couldn't get information about operation system name");
+            return;
+        }
         HBox modesBox = new HBox();
         modesBox.setPadding(new Insets(12));
         modesBox.setSpacing(10);
@@ -48,6 +61,15 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.show();
         stage.setOnCloseRequest(new CloseRequestHandler());
+    }
+
+    private void showMessage(String message) {
+        Stage dialogStage = new Stage();
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.setScene(new Scene(VBoxBuilder.create().
+                children(new Text(message)).
+                alignment(Pos.CENTER).padding(new Insets(5)).build()));
+        dialogStage.show();
     }
 
     private synchronized void applyMode(APC40Mode mode)
