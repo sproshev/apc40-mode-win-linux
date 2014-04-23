@@ -17,3 +17,7 @@ This is a graphic tool to change firmware mode of Akai APC40. You can read about
 ## Usage
 
 Download latest release from [this](https://github.com/sproshev/apc40-mode-win-linux/releases) page and run it by double clicking.
+
+## Building
+
+Run `mvn jfx:jar`.

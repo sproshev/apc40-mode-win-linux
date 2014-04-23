@@ -1,5 +1,5 @@
 /*
- * Main.java
+ * apc40-mode-win-linux
  *
  * Copyright (c) 2014 Semyon Proshev
  *
